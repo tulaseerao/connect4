@@ -2,7 +2,9 @@
 <% 1.upto(@board.rows) do |row| %>
   <% @board.columns.times do |column| %>
     <div class="col-sm-1 board-cell" id="r<%=row%>_c<%=column%>">
-        color
+        <div class='122'>
+          <%= raw '&nbsp;' %>
+        </div>
     </div>
   <% end %>
   <div class="row"></div>

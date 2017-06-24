@@ -21,3 +21,10 @@
   height: 100px;
   cursor: pointer
 }
+
+.blue {
+  background-color: blue;
+}
+.pink {
+  background-color: #FF00FF;
+}

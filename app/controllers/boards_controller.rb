@@ -2,7 +2,7 @@ class BoardsController < ApplicationController
   before_action :create_board, only: [:create]
   
   def create
-    render 'show'
+    render 'grid'
   end
 
   private 
