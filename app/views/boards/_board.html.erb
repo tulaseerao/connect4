@@ -1,8 +1,8 @@
 <div class="row"></div>
 <% 1.upto(@board.rows) do |row| %>
   <% @board.columns.times do |column| %>
-    <div class="col-sm-1 board-cell" id="r<%=row%>_c<%=column%>">
-        <div class='122'>
+    <div class="col-sm-1 board-cell" id="row_<%=row%>_column_<%=column%>">
+        <div class="">
           <%= raw '&nbsp;' %>
         </div>
     </div>

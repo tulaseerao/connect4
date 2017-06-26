@@ -1,0 +1,3 @@
+BLUE = 'blue'
+PINK = 'pink'
+DEFAULT_PLAYER_NAMES = [ BLUE, PINK ]

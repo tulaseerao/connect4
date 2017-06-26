@@ -35,6 +35,10 @@ gem "twitter-bootstrap-rails"
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'pry', '~> 0.10.1'
+  gem 'pry-remote', '~> 0.1.8'
+  gem 'pry-nav'
+  gem 'pry-stack_explorer', '~> 0.4.9.2'
 end
 
 group :development do

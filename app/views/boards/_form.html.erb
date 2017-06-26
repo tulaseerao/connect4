@@ -1,0 +1,5 @@
+
+<%= form_for @board.picks.new, url: board_player_picks_path(@board, @board.players.first.id), :html => { id: 'pick_form', :method => 'POST' } do |f|%>
+  <%= f.hidden_field :column, value: '' %>
+<% end %>
+

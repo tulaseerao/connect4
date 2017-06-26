@@ -1,12 +1,2 @@
 <%= render 'board' %>
-
-<script>
-    $(document).ready(function(){
-      var colorClass = 'blue'
-      $('div').click(function(){
-        $('#'+this.id).addClass(colorClass);
-        colorClass = (colorClass === 'blue' ? 'pink' : 'blue');
-      });
-    });
-  
-  </script>
+<%= render 'form' %>
