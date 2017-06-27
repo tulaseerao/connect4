@@ -13,8 +13,8 @@ RSpec.describe Pick, type: :model do
 
   describe '#assign_row' do
    let!(:board) { Board.create(rows: 6) }
-   let(:board_id) { board.id}
-   let(:played_id) { board.players.first.id}
+   let(:board_id) { board.id }
+   let(:played_id) { board.players.first.id }
 
     it 'assign last row when no rows picked' do
       row = Pick.assign_row({board_id: board.id, column: 6})
@@ -27,6 +27,38 @@ RSpec.describe Pick, type: :model do
       row = Pick.assign_row({board_id: board.id, column: 6})
       expect(row).to eq (board.rows - 1)
     end
+  end
+
+  describe '.winner?' do
+   let!(:board) { Board.create(rows: 6) }
+   let(:board_id) { board.id }
+   let(:first_player) { board.players.first }
+   let(:player_id) { first_player.id }
+   let(:row_pick) {
+      1.upto(4) do |counter|
+        row = Pick.assign_row({board_id: board.id, column: 6})
+        Pick.create(board_id: board_id, player_id: player_id, column: 6, row: row)
+      end
+   }
+   let(:column_pick) {
+      1.upto(4) do |counter|
+        row = Pick.assign_row({board_id: board.id, column: counter})
+        Pick.create(board_id: board_id, player_id: player_id, column: counter, row: row)
+      end
+   }
+   
+   it 'have a row winner' do
+     row_pick
+     board.reload
+     expect(board.winner).to eq(first_player.name)
+   end
+
+   it 'have a column winner' do 
+     column_pick
+     board.reload
+     expect(board.winner).to eq(first_player.name)
+   end
+   
   end
 
 end

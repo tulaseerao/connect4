@@ -4,7 +4,7 @@ class PicksController < ApplicationController
   
   def create
     add_pick_to_board
-    redirect_back(fallback_location: root_path)
+    redirect_to grid_board_path(@board)
   end
 
   private

@@ -1,0 +1,9 @@
+<% if @board.winner.present? %>
+  <h1>
+    <%= "Winner:: #{@board.winner.try(:capitalize)}" %>
+  </h1>
+<% else %>
+  <h1>
+  <%= "Player:: #{@board.player_name}" %>
+</h1>
+<% end %>
