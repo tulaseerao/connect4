@@ -11,8 +11,8 @@ default: &default
 
 development: &development
   <<: *default
-  database: connect4
-  host: localhost
+  database: <%= ENV["DATABASE"] %>
+  host: <%= ENV["DATABASE_HOST"] %> || localhost
   user: 
   password: 
   port:
@@ -25,5 +25,4 @@ test:
   database: connect4_test
 
 production:
-  <<: *default
-  database: <%= ENV["DATABASE"] %>
+  <<: *development
