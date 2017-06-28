@@ -12,7 +12,7 @@ default: &default
 development: &development
   <<: *default
   database: <%= ENV["DATABASE"] %>
-  host: <%= ENV["DATABASE_HOST"] %> || localhost
+  host: <%= ENV["DATABASE_HOST"] || 'localhost' %>
   user: 
   password: 
   port:
