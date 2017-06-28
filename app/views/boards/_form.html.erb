@@ -1,5 +1,5 @@
 
-<%= form_for @picks.new, url: board_player_picks_path(@board, @board.pick_player), :html => { id: 'pick_form', :method => 'POST' } do |f|%>
+<%= form_for @picks.new, remote: true, url: board_player_picks_path(@board, @board.pick_player), :html => { id: 'pick_form', :method => 'POST' } do |f|%>
   <%= f.hidden_field :column, value: '' %>
 <% end %>
 
