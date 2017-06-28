@@ -30,34 +30,60 @@ RSpec.describe Pick, type: :model do
   end
 
   describe '.winner?' do
-   let!(:board) { Board.create(rows: 6) }
-   let(:board_id) { board.id }
-   let(:first_player) { board.players.first }
-   let(:player_id) { first_player.id }
-   let(:row_pick) {
-      1.upto(4) do |counter|
-        row = Pick.assign_row({board_id: board.id, column: 6})
-        Pick.create(board_id: board_id, player_id: player_id, column: 6, row: row)
-      end
-   }
-   let(:column_pick) {
-      1.upto(4) do |counter|
-        row = Pick.assign_row({board_id: board.id, column: counter})
-        Pick.create(board_id: board_id, player_id: player_id, column: counter, row: row)
-      end
-   }
-   
-   it 'have a row winner' do
-     row_pick
-     board.reload
-     expect(board.winner).to eq(first_player.name)
-   end
+     let!(:board) { Board.create(rows: 6) }
+     let(:board_id) { board.id }
+     let(:first_player) { board.players.first }
+     let(:player_id) { first_player.id }
+     let(:row_pick) {
+        1.upto(4) do |counter|
+          row = Pick.assign_row({board_id: board.id, column: 6})
+          Pick.create(board_id: board_id, player_id: player_id, column: 6, row: row)
+        end
+      }
+      let(:column_pick) {
+        1.upto(4) do |counter|
+          row = Pick.assign_row({board_id: board.id, column: counter})
+          Pick.create(board_id: board_id, player_id: player_id, column: counter, row: row)
+        end
+      }
 
-   it 'have a column winner' do 
-     column_pick
-     board.reload
-     expect(board.winner).to eq(first_player.name)
-   end
+      let(:diagonal_left_pick) {
+        1.upto(4) do |counter|
+          row = Pick.assign_row({board_id: board.id, column: 4 - counter })
+          Pick.create(board_id: board_id, player_id: player_id, column: 4 - counter , row: row)
+        end
+      }
+
+      let(:diagonal_right_pick) {
+        4.downto(1) do |counter|
+          row = Pick.assign_row({board_id: board.id, column: 4 - counter })
+          Pick.create(board_id: board_id, player_id: player_id, column: 4 - counter , row: row)
+        end
+      }
+   
+      it 'have a row winner' do
+        row_pick
+        board.reload
+        expect(board.winner).to eq(first_player.name)
+      end
+
+      it 'have a column winner' do 
+        column_pick
+        board.reload
+        expect(board.winner).to eq(first_player.name)
+      end
+
+      it 'have a diagonal left winner' do 
+        diagonal_left_pick
+        board.reload
+        expect(board.winner).to eq(first_player.name)
+      end
+
+      it 'have a diagonal right winner' do 
+        diagonal_right_pick
+        board.reload
+        expect(board.winner).to eq(first_player.name)
+      end
    
   end
 

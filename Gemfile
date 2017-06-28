@@ -3,8 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.5'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
-# Use sqlite3 as the database for Active Record
-gem 'pg', '~> 0.18.1'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
@@ -33,12 +32,15 @@ gem 'jbuilder', '~> 2.5'
 gem "twitter-bootstrap-rails"
 
 group :development, :test do
+  # Use sqlite3 as the database for Active Record
+  gem 'pg'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'pry', '~> 0.10.1'
   gem 'pry-remote', '~> 0.1.8'
   gem 'pry-nav'
   gem 'pry-stack_explorer', '~> 0.4.9.2'
+
 end
 
 group :development do
@@ -50,6 +52,10 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rspec-rails', '~> 3.5'
   gem 'shoulda'
+end
+
+group :production do
+  gem 'pg'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

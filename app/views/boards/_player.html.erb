@@ -2,6 +2,8 @@
   <h1>
     <%= "Winner:: #{@board.winner.try(:capitalize)}" %>
   </h1>
+<% elsif no_winner?(@picks,@board) %>
+   <h1> No Winner for this Game</h1>
 <% else %>
   <h1>
   <%= "Player:: #{@board.player_name}" %>

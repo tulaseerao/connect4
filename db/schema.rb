@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170624201403) do
+ActiveRecord::Schema.define(version: 20170628145708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,8 +31,10 @@ ActiveRecord::Schema.define(version: 20170624201403) do
     t.integer  "column"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["board_id", "row", "column"], name: "index_picks_on_board_row_column", using: :btree
     t.index ["board_id"], name: "index_picks_on_board_id", using: :btree
     t.index ["player_id"], name: "index_picks_on_player_id", using: :btree
+    t.index ["row", "column"], name: "index_picks_on_row_column", using: :btree
   end
 
   create_table "players", force: :cascade do |t|
@@ -40,6 +42,7 @@ ActiveRecord::Schema.define(version: 20170624201403) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["board_id"], name: "index_player_on_board_id", using: :btree
     t.index ["board_id"], name: "index_players_on_board_id", using: :btree
   end
 

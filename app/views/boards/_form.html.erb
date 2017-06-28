@@ -1,12 +1,12 @@
 
-<%= form_for @board.picks.new, url: board_player_picks_path(@board, @board.pick_player), :html => { id: 'pick_form', :method => 'POST' } do |f|%>
+<%= form_for @picks.new, url: board_player_picks_path(@board, @board.pick_player), :html => { id: 'pick_form', :method => 'POST' } do |f|%>
   <%= f.hidden_field :column, value: '' %>
 <% end %>
 
 <% unless @board.winner.present?%>
   <script>
   $(document).ready(function(){
-    $('div.board-cell').click(function(){
+    $('div.empty-cell').click(function(){
       id  = this.id;
       id  = id.split("_");
       id  = id[id.length-1];
