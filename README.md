@@ -1,24 +1,13 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Connect 4
+===============
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Connect four game written Ruby on Rails and Postsresql
+  
+  ### Setup
+  - brew install postgresql (unless you already have it)
+  - bundle install
+  - rake db:create && rake db:migrate
+  - rails s
+  - visit http://localhost:3000 and play a game
