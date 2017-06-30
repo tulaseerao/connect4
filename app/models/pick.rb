@@ -60,25 +60,19 @@ class Pick < ApplicationRecord
         0.upto(board.columns).each do |column|
           if board.picks.where(column: column).count!= board.rows && picks.where(column: column).count > 2 
             return  column
-          end
-
-          # 1.upto(board.rows).each do |row|
-          #   if board.picks.where(column: column).count!= board.rows && picks.where(row: row).count > 2 
-          #     found =  column
-          #     break
-          #   end
-          # end
-
-          
-          # 6.downto(1).each do |row|
-            
-          # end
-          
+          end          
         end
 
-      # if board.picks.where(column: found).count!= board.rows
-      #   return found
-      # end
+        6.downto(1).each do |row|
+            row_picks = picks.where(row: row).order(:column)       
+            if row_picks.count > 2 
+              right_column = row_picks.first.column - 1 
+              right_column = row_picks.last.column + 1 if right_column < 0
+              if board.picks.where(column: right_column).empty?
+                return right_column
+              end
+            end
+        end
     end
     return false
   end
@@ -95,6 +89,7 @@ class Pick < ApplicationRecord
 
   def column_full?
      picks = self.board.picks.where(column: self.column)
+     logger.info "columnfull? ::column:::#{self.column}"
      logger.info "picks count::#{picks.count}"
      picks && picks.count == board.rows
   end

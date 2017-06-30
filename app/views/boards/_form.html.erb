@@ -1,7 +1,6 @@
 
 <%= form_for Pick.new,remote: true, url: board_player_picks_path(@board, @board.pick_player), :html => { id: 'pick_form', :method => 'POST' } do |f|%>
-  <%= f.hidden_field :column, value: '' %>
-  <%= hidden_field :player_name, value: @board.player_name %>
+  <%= f.hidden_field :column, value: @board.pick_column %>
 <% end %>
 
 <% unless @board.winner.present?%>
@@ -22,7 +21,7 @@
 
   <% if ((@board.player_type == HUMAN_V_AI) && (@board.player_name == 'Pink')) %>
     <script>
-        $('#pick_column').val(<%=@board.pick_column%>);
+        // $('#pick_column').val(<%=@board.pick_column%>);
         $("#pick_form").submit();
         $("#pick_form").attr('action', window.location.href);
         $("#pick_form").attr('method', 'GET');
