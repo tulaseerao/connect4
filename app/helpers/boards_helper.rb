@@ -11,6 +11,11 @@ module BoardsHelper
     end
   end
 
+  def toggle_player
+
+  end
+
+
   def no_winner?(picks,board)
     if picks.present? && board.present? && board.winner.nil?
       picks.count == (board.rows * board.columns)

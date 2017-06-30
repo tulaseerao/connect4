@@ -1,8 +1,12 @@
 <div class='container' style='padding:10px;'>
   <div class="row">
     <div class="col-sm-4">
-        <%= link_to boards_path, method: 'POST', class: 'btn btn-info' do %>
-        Start New Game
+        <%= link_to boards_path(player_type: HUMAN_V_HUMAN), method: 'POST', class: 'btn btn-info' do %>
+        Start New Game(Human vs Human)
+        <% end %>
+
+        <%= link_to boards_path(player_type: HUMAN_V_AI), method: 'POST', class: 'btn btn-info' do %>
+        Start New Game(Human vs AI)
         <% end %>
     </div>
   </div>

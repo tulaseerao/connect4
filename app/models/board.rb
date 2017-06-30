@@ -10,7 +10,15 @@ class Board < ApplicationRecord
 
   def player_name
     pick_player.try(:name).try(:capitalize)
-  end 
+  end
+
+  def pick_column
+    Pick.random_columns(self)
+  end
+
+  def ai_player?
+    player_type == HUMAN_V_AI
+  end
 
   private
     def add_players

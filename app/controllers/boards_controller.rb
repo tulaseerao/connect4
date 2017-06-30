@@ -9,6 +9,9 @@ class BoardsController < ApplicationController
   private 
     def set_board
       @board ||= Board.find_or_create_by(id: params[:id])
+      if params[:player_type].present?
+        @board.update_attribute(:player_type, params[:player_type])
+      end
     end
 
     def set_picks
