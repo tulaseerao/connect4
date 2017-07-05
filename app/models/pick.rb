@@ -53,16 +53,25 @@ class Pick < ApplicationRecord
     board.picks.try(:last).try(:player).try(:picks)
   end
 
+  def self.ai_picks(board)
+    if board.picks.count < 2
+      return false
+    end
+    board.picks.where(player_id: board.players.last.id)
+  end
+
   def self.pay_on_row(board)
     picks = self.player_picks(board)
-    found_column = (self.pick_right_column(board, picks) || self.pick_right_row(board, picks)) if picks
+    ai_picks = self.ai_picks(board)
+    found_column = (self.pick_right_column(board, ai_picks) || self.pick_right_row(board, ai_picks)) if ai_picks
+    found_column = (self.pick_right_column(board, picks) || self.pick_right_row(board, picks)) if picks && !found_column
     return found_column
   end
 
   private
 
   def self.pick_right_column(board, picks)
-    0.upto(board.columns).each do |column|
+    0.upto(board.columns - 1).each do |column|
       if board.picks.where(column: column).count!= board.rows && picks.where(column: column).count > 2 
         return  column
       end          
@@ -72,14 +81,17 @@ class Pick < ApplicationRecord
   end
 
   def self.pick_right_row(board, picks)
+    all_columns = 0.upto(board.columns - 1).to_a
     board.rows.downto(1).each do |row|
-      row_picks = picks.where(row: row).order(:column)       
+      row_picks = picks.where(row: row).order(:column)
+
       if row_picks.count > 2
-        right_column = row_picks.first.column - 1 
-        right_column = row_picks.last.column + 1 if right_column < 0
-        if board.picks.where(column: right_column).empty?
-          return right_column
-        end
+        empty_columns = all_columns - row_picks.map(&:column)
+        empty_columns.each do |rem_col|
+          if board.picks.where(column: rem_col, row: row).empty?
+            return rem_col
+          end
+        end   
       end
     end
 
