@@ -55,43 +55,52 @@ class Pick < ApplicationRecord
 
   def self.pay_on_row(board)
     picks = self.player_picks(board)
-    found = nil
-    if picks
-        0.upto(board.columns).each do |column|
-          if board.picks.where(column: column).count!= board.rows && picks.where(column: column).count > 2 
-            return  column
-          end          
-        end
-
-        6.downto(1).each do |row|
-            row_picks = picks.where(row: row).order(:column)       
-            if row_picks.count > 2 
-              right_column = row_picks.first.column - 1 
-              right_column = row_picks.last.column + 1 if right_column < 0
-              if board.picks.where(column: right_column).empty?
-                return right_column
-              end
-            end
-        end
-    end
-    return false
+    found_column = (self.pick_right_column(board, picks) || self.pick_right_row(board, picks)) if picks
+    return found_column
   end
 
   private
 
+  def self.pick_right_column(board, picks)
+    0.upto(board.columns).each do |column|
+      if board.picks.where(column: column).count!= board.rows && picks.where(column: column).count > 2 
+        return  column
+      end          
+    end
+
+    return false
+  end
+
+  def self.pick_right_row(board, picks)
+    board.rows.downto(1).each do |row|
+      row_picks = picks.where(row: row).order(:column)       
+      if row_picks.count > 2
+        right_column = row_picks.first.column - 1 
+        right_column = row_picks.last.column + 1 if right_column < 0
+        if board.picks.where(column: right_column).empty?
+          return right_column
+        end
+      end
+    end
+
+    return false
+  end
+
+
   def reset_row?
-    if column_full?
+    if (column_full?) || out_of_bounds?
       self.column = Pick.easy_pick(self.board)
-      logger.info "column::#{self.column}"
       self.row = Pick.assign_row({board_id: self.board.id, column: self.column})
     end
   end
 
   def column_full?
      picks = self.board.picks.where(column: self.column)
-     logger.info "columnfull? ::column:::#{self.column}"
-     logger.info "picks count::#{picks.count}"
      picks && picks.count == board.rows
+  end
+
+  def out_of_bounds?
+    (self.column > (self.board.columns - 1) || self.column < 0)
   end
 
   def set_winner?

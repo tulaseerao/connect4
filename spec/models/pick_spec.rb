@@ -29,6 +29,41 @@ RSpec.describe Pick, type: :model do
     end
   end
 
+  describe 'ai player' do
+    let!(:board) { Board.create(rows: 6, player_type: HUMAN_V_AI) }
+    let(:board_id) { board.id }
+    let(:players) { board.players}
+    let(:first_player) { players.first }
+    let(:last_player) { players.last }
+    let(:row_pick) {
+      1.upto(3) do |counter|
+        row = Pick.assign_row({board_id: board.id, column: 6})
+        Pick.create(board_id: board_id, player_id: first_player.id, column: 6, row: row)
+      end
+    }
+
+    let(:column_pick) {
+      1.upto(3) do |counter|
+        row = Pick.assign_row({board_id: board.id, column: counter})
+        Pick.create(board_id: board_id, player_id: first_player.id, column: counter, row: row)
+      end
+    }
+
+    it 'ai player should pick column to stop human player winning ' do
+      row_pick
+      board.reload
+      expect(board.winner).to eq(nil)
+      expect(board.pick_column).to eq(6)
+    end
+
+    it 'ai player should pick row to stop human player winning' do
+      column_pick
+      board.reload
+      expect(board.winner).to eq(nil)
+      expect(board.pick_column).to eq(0)
+    end
+  end
+
   describe '.winner?' do
      let!(:board) { Board.create(rows: 6) }
      let(:board_id) { board.id }
