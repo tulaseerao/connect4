@@ -4,7 +4,7 @@ module Winner
   included do
   end
 
-  module ClassMethods
+  module ClassMethods  
   end
 
   def current_picks
@@ -25,10 +25,10 @@ module Winner
   def matching_pick?(pick, type)
     found_pick = false
     matched_pick = 0
-    1.upto(3) do |counters|
+    1.upto(2) do |counters|
       if check_matched_pick?({type: type, row: pick.row, column: pick.column, counters: counters})
         matched_pick = matched_pick + 1
-        if matched_pick == 3
+        if matched_pick == 2
           found_pick = true
           break
         end

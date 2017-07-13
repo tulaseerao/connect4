@@ -24,14 +24,15 @@ class PicksController < ApplicationController
 
     def pick_params
       params.require(:pick).permit(
-        :column
+        :column,
+        :row
       )
     end
 
     def assign_row
       options = {
         board_id: params[:board_id], 
-        column: pick_params[:column]
+        column: pick_params[:column],
       }
       Pick.assign_row(options)
     end
