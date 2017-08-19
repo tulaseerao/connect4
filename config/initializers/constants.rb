@@ -1,5 +1,5 @@
-BLUE = 'blue'
-PINK = 'pink'
+BLUE = 'vasisht'
+PINK = 'agastya'
 DEFAULT_PLAYER_NAMES = [ BLUE, PINK ]
 ROW = 'row'
 COLUMN = 'column'
